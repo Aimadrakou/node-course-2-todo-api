@@ -2,6 +2,7 @@
 
 var express = require("express");
 var bodyParser = require("body-parser");
+var {ObjectId} = require("mongodb");
 
 var {mongoose} = require("./db/mongoose");    //deconstructuring
 var {Todo} = require("./models/todo");
@@ -24,7 +25,36 @@ app.post("/todos", (req, res) => {            //sets up a route (url, (callback(
   });
 });
 
-app.listen(3000, () => {                      //port 3000 /callback once app is up
+
+app.get("/todos", () => {                      //new route
+  Todo.find().then(() => {
+    res.send({todos});
+  }, (e) => {
+    res.status(400).send(e);
+  });
+});
+
+
+app.get("/todos/:id", (req, res) => {          //creates id variable, we can access   /todos/123    -> {"id": "123"}
+  var id = req.params.id                       //object key(URl parameter):values(Vaues put in id)
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Todo.findById(id).then((todo) => {
+    if (!todo) {
+      return res.status(404).send();
+    }
+
+    res.send({todo});
+  }).catch((e) => {
+    res.status(400).send();
+  });
+});
+
+
+app.listen(3000, () => {                       //port 3000 /callback once app is up
   console.log("Started on port 3000");
 });
 
