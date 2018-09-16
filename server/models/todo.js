@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var Todo = mongoose.model("Todo", {      //model for everything we want to store
+var Todo = mongoose.model("Todo", {     //model for everything we want to store
   text: {                               //property text
     type: String                        //sets type for attribute
     required: true                      //must give attribute, else error thrown

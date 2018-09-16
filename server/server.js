@@ -5,7 +5,7 @@ var bodyParser = require("body-parser");
 
 var {mongoose} = require("./db/mongoose");    //deconstructuring
 var {Todo} = require("./models/todo");
-var {User} = required("./models/user");
+var {User} = require("./models/user");
 
 
 var app = express();                          //creates TodoApp
@@ -27,3 +27,5 @@ app.post("/todos", (req, res) => {            //sets up a route (url, (callback(
 app.listen(3000, () => {                      //port 3000 /callback once app is up
   console.log("Started on port 3000");
 });
+
+module.exports = {app}
